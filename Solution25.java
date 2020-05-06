@@ -4,10 +4,6 @@ class Solution25 implements LeetcodeSolution {
     // Toggle this bool;
     private boolean useRecursion = true;
 
-    public Solution25(boolean useRecursion) {
-        this.useRecursion = useRecursion;
-    }
-
     public ListNode reverseKGroup(ListNode head, int k) {
         if (this.useRecursion) {
             return this._reverseKGroupRecursion(head, k);
@@ -96,6 +92,11 @@ class Solution25 implements LeetcodeSolution {
     }
 
     public void test() {
+        this.test(false);
+    }
+
+    public void test(boolean useRecursion) {
+        this.useRecursion = useRecursion;
         ListNode head = new ListNode(1);
         ListNode temp = head;
         for (int i = 2; i < 6; i++) {
