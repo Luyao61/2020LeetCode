@@ -1,6 +1,4 @@
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 // https://leetcode.com/problems/optimal-account-balancing/
@@ -11,7 +9,6 @@ class Solution465 implements LeetcodeSolution {
         if (transactions == null) {
             return 0;
         }
-        List<Integer> nonZeroBalance = new ArrayList<Integer>();
         Map<Integer, Integer> balance = new HashMap<>();
         for (int[] t: transactions) {
             if (t != null) {
@@ -21,37 +18,31 @@ class Solution465 implements LeetcodeSolution {
                 balance.put(t[1], balance.get(t[1]) + t[2]);
             }
         }
-        balance.forEach((key, value) -> {
-            if (value != 0) {
-                nonZeroBalance.add(value);
-            }
-        });
-        _dfs(nonZeroBalance, 0, 0, 0);
+        int[] nonZeroBalance = new int[balance.size()];
+        int i = 0;
+        for (int value: balance.values()){
+            nonZeroBalance[i++] = value;
+        }
+        _dfs(nonZeroBalance, 0, 0);
         return _minTrans;
     }
 
-    private void _dfs(List<Integer> balance, int settledCount, int s, int remains) {
-        if (settledCount == balance.size()) {
-            if (s < _minTrans) {
-                _minTrans = s;
+    private void _dfs(int[] balance, int settledIndex, int transCount) {
+        while (settledIndex < balance.length &&  balance[settledIndex] == 0) {
+            settledIndex++;
+        }
+        if (settledIndex == balance.length) {
+            if (transCount < _minTrans) {
+                _minTrans = transCount;
             }
             return;
         }
-        for (int i = 0 ; i < balance.size(); i++) {
-            int currentBalance = balance.get(i);
-            if (currentBalance == 0) {
-                continue;
-            }
-            if (remains == 0) {
-                // remains = currentBalance;
-                balance.set(i, 0);
-                _dfs(balance, settledCount, s, currentBalance);
-                balance.set(i, currentBalance);
-            } else if (balance.get(i) * remains < 0) {
-                int currentRemains = remains + currentBalance;
-                balance.set(i, currentRemains);
-                _dfs(balance, currentRemains == 0 ? settledCount + 2 : settledCount + 1, s + 1, 0);
-                balance.set(i, currentBalance);
+        for (int i = transCount + 1 ; i < balance.length; i++) {
+            int currentBalance = balance[settledIndex];
+            if (currentBalance * balance[i] < 0) {
+                balance[i] += currentBalance;
+                _dfs(balance, settledIndex + 1, transCount + 1);
+                balance[i] -= currentBalance;
             }
         }
     }
