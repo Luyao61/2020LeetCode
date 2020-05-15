@@ -1,20 +1,28 @@
-class TrieNode {
-    private final int SIZE = 26;
-    private TrieNode[] children;
-
+class Trie<T> {
+    private T value;
+    private final int DEFAULT_SIZE = 26;
+    private Trie<T>[] children;
     private boolean isLeaf;
+    private int size = -1;
 
-    public TrieNode() {
-        this.children = new TrieNode[SIZE];
+    /** Initialize your data structure here. */
+    public Trie() {
+        this.children = new Trie<>[DEFAULT_SIZE];
     }
 
-    public TrieNode get(char c) {
-        return this.children[c - 'a'];
+    /** Initialize your data structure here. */
+    public Trie(int size) {
+        this.size = size;
+        this.children = new Trie<>[this.size];
     }
 
-    public void putIfAbsent(char c) {
-        if (this.children[c - 'a'] == null) {
-            this.children[c - 'a'] = new TrieNode();
+    public Trie<T> get(int index) {
+        return this.children[index];
+    }
+
+    public void putIfAbsent(int index) {
+        if (this.children[index] == null) {
+            this.children[index] = new Trie<T>(this.size == -1 ? DEFAULT_SIZE : this.size);
         }
     }
 
@@ -24,15 +32,6 @@ class TrieNode {
 
     public boolean isLeaf() {
         return this.isLeaf;
-    }
-}
-
-class Trie {
-    private TrieNode root;
-
-    /** Initialize your data structure here. */
-    public Trie() {
-        this.root = new TrieNode();
     }
 
     /** Inserts a word into the trie. */
