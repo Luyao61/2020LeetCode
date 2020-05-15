@@ -39,6 +39,7 @@ class AutocompleteSystem {
             }
         });
         if (c == '#') {
+            node.setIsLeaf(true);
             node.setValue(node.getValue() == null ? 1 :node.getValue() + 1);
             node = this.root;
             sb = new StringBuilder();
