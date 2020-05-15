@@ -35,11 +35,11 @@ class AutocompleteSystem {
     public List<String> input(char c) {
         PriorityQueue<StringWithCount> topResults = new PriorityQueue<>(TOP + 1, new Comparator<StringWithCount>() {
             public int compare(StringWithCount a, StringWithCount b) {
-                return a.c == b.c ? a.s.compareTo(b.s) : b.c - a.c;
+                return a.c == b.c ? b.s.compareTo(a.s) : a.c - b.c;
             }
         });
         if (c == '#') {
-            node.setValue(node.getValue() + 1);
+            node.setValue(node.getValue() == null ? 1 :node.getValue() + 1);
             node = this.root;
             sb = new StringBuilder();
         } else {
