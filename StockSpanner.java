@@ -1,19 +1,18 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 class StockSpanner {
-    List<PriceAndSpan> history;
+    Deque<PriceAndSpan> history;
 
     public StockSpanner() {
-        history = new ArrayList<>();
+        history = new ArrayDeque<>();
     }
 
     public int next(int price) {
-        int i = history.size() - 1;
         int span = 1;
-        while (i >= 0 && history.get(i).price <= price) {
-            span += history.get(i).value;
-            i = i - history.get(i).value;
+        while (!history.isEmpty() && history.peekLast().price <= price) {
+            PriceAndSpan last = history.pollLast();
+            span += last.value;
         }
         history.add(new PriceAndSpan(price, span));
         return span;
