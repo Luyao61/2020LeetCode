@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+// https://leetcode.com/problems/combination-sum/
 class Solution {
     public boolean isCombinationSum(int[] candidates, int target) {
         // Arrays.sort(candidates);
@@ -22,6 +23,8 @@ class Solution {
         return dp[candidates.length][target];
     }
 
+    // candidates does not have duplicates.
+    // same repeated number can be choosen from candidates.
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         // dp[t] - list of subsets that sums to t;
         // dp[t][0] - first subsets that sums to t;
