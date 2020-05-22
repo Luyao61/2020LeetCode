@@ -3,7 +3,7 @@ import java.util.Arrays;
 import java.util.List;
 
 // https://leetcode.com/problems/combination-sum/
-class Solution {
+class Solution39 {
     public boolean isCombinationSum(int[] candidates, int target) {
         // Arrays.sort(candidates);
         boolean[][] dp = new boolean[candidates.length + 1][target + 1];
