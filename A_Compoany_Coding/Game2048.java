@@ -56,6 +56,24 @@ class Board {
     }
   }
 
+  public void addRandomNumberReservoirSampling() {
+    int n = 0;
+    int[] position = new int[2];
+    for (int i = 0; i < this.size(); i++) {
+      for (int j = 0; j < this.size(); j++) {
+        if (this.board[i][j] == 0) {
+          n++;
+          int p = (int) Math.random() * n;
+          if (p == 0) {
+            position[0] = i;
+            position[1] = j;
+          }
+        }
+      }
+    }
+    board[position[0]][position[1]] = 2;
+  }
+
   public boolean isFull() {
     return this.availableSlots() == 0;
   }
